@@ -18,7 +18,7 @@ local BYTE_a, BYTE_z, BYTE_A, BYTE_Z = sbyte("a"), sbyte("z"), sbyte("A"), sbyte
 local BYTE_DOT, BYTE_COLON = sbyte("."), sbyte(":")
 local BYTE_OBRACK, BYTE_CBRACK = sbyte("["), sbyte("]")
 local BYTE_OBRACE, BYTE_CBRACE = sbyte("{"), sbyte("}")
-local BYTE_QUOTE, BYTE_DQUOTE = sbyte("'"), sbyte('"')
+local BYTE_QUOTE, BYTE_DQUOTE, BYTE_BTQUOTE = sbyte("'"), sbyte('"'), sbyte('`')
 local BYTE_PLUS, BYTE_DASH, BYTE_LDASH = sbyte("+"), sbyte("-"), sbyte("_")
 local BYTE_SLASH, BYTE_BSLASH = sbyte("/"), sbyte("\\")
 local BYTE_EQ, BYTE_NE = sbyte("="), sbyte("~")
@@ -92,6 +92,7 @@ local simple_escapes = {
    [sbyte("v")] = sbyte("\v"),
    [BYTE_BSLASH] = BYTE_BSLASH,
    [BYTE_QUOTE] = BYTE_QUOTE,
+   [BYTE_BTQUOTE] = BYTE_BTQUOTE,
    [BYTE_DQUOTE] = BYTE_DQUOTE
 }
 
@@ -654,6 +655,7 @@ local byte_handlers = {
    [BYTE_OBRACK] = lex_bracket,
    [BYTE_QUOTE] = lex_short_string,
    [BYTE_DQUOTE] = lex_short_string,
+   [BYTE_BTQUOTE] = lex_short_string,
    [BYTE_DASH] = lex_dash,
    [BYTE_SLASH] = lex_div,
    [BYTE_EQ] = lex_eq,
