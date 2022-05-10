@@ -480,6 +480,14 @@ call_handlers.string = call_handlers["{"]
 
 local suffix_handlers = {}
 
+suffix_handlers["?."] = function(state, base_node)
+    -- Skip "?.".
+    skip_token(state)
+    skip_token(state)
+    local index_node = parse_id(state, "String")
+    return new_inner_node(base_node, index_node, "Index", {base_node, index_node})
+end
+
 suffix_handlers["."] = function(state, base_node)
    -- Skip ".".
    skip_token(state)

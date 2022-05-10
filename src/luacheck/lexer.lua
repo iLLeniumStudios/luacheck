@@ -24,6 +24,7 @@ local BYTE_SLASH, BYTE_BSLASH = sbyte("/"), sbyte("\\")
 local BYTE_EQ, BYTE_NE = sbyte("="), sbyte("~")
 local BYTE_LT, BYTE_GT = sbyte("<"), sbyte(">")
 local BYTE_LF, BYTE_CR = sbyte("\n"), sbyte("\r")
+local BYTE_QM = sbyte('?')
 local BYTE_SPACE, BYTE_FF, BYTE_TAB, BYTE_VTAB = sbyte(" "), sbyte("\f"), sbyte("\t"), sbyte("\v")
 
 local function to_hex(b)
@@ -634,6 +635,15 @@ local function lex_dot(state)
    end
 end
 
+local function lex_qm(state)
+   local b = next_byte(state)
+   if b == BYTE_DOT then
+      return "?."
+   end
+
+   return "?"
+end
+
 local function lex_any(state, b)
    state.offset = state.offset + 1
 
@@ -662,7 +672,8 @@ local byte_handlers = {
    [BYTE_NE] = lex_ne,
    [BYTE_LT] = lex_lt,
    [BYTE_GT] = lex_gt,
-   [BYTE_LDASH] = lex_ident
+   [BYTE_LDASH] = lex_ident,
+   [BYTE_QM] = lex_qm,
 }
 
 for b=BYTE_0, BYTE_9 do
