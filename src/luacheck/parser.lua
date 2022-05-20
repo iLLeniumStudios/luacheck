@@ -495,6 +495,17 @@ suffix_handlers["."] = function(state, base_node)
    return new_inner_node(base_node, index_node, "Index", {base_node, index_node})
 end
 
+suffix_handlers["?["] = function(state, base_node)
+   local bracket_range = copy_range(state)
+   -- Skip "?[".
+   skip_token(state)
+   skip_token(state)
+   local index_node = parse_expression(state)
+   local ast_node = new_inner_node(base_node, state, "Index", {base_node, index_node})
+   check_and_skip_closing_token(state, bracket_range, "[")
+   return ast_node
+end
+
 suffix_handlers["["] = function(state, base_node)
    local bracket_range = copy_range(state)
    -- Skip "[".

@@ -641,6 +641,10 @@ local function lex_qm(state)
       return "?."
    end
 
+   if b == BYTE_OBRACK then
+      return "?["
+   end
+
    return "?"
 end
 
