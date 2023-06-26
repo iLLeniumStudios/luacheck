@@ -203,8 +203,8 @@ local function new_opset_item(node)
    return {
       tag = "OpSet",
       node = node,
-      lhs = node[2],
-      rhs = node[3],
+      lhs = node[1],
+      rhs = node[2],
       accesses = {},
       mutations = {},
       used_values = {},
@@ -530,18 +530,19 @@ end
 
 function LinState:emit_stmt_OpSet(node)
    local item = new_opset_item(node)
-   self:scan_expr(item, node[3])
+   self:scan_exprs(item, node[2])
 
-   local lhs = node[2]
-   if lhs.tag == "Id" then
-      local var = self:check_var(lhs)
+   for _, expr in ipairs(node[1]) do
+      if expr.tag == "Id" then
+         local var = self:check_var(expr)
 
-      if var then
-         self:register_upvalue_action(item, var, "set_upvalues")
+         if var then
+            self:register_upvalue_action(item, var, "set_upvalues")
+         end
+      else
+         assert(expr.tag == "Index")
+         self:scan_lhs_index(item, expr)
       end
-   else
-      assert(lhs.tag == "Index")
-      self:scan_lhs_index(item, lhs)
    end
 
    self:emit(item)
@@ -650,7 +651,7 @@ function LinState:register_set_variables()
    local line = self.lines.top
 
    for _, item in ipairs(line.items) do
-      if item.tag == "Local" or item.tag == "Set" then
+      if item.tag == "Local" or item.tag == "Set" or item.tag == "OpSet" then
          item.set_variables = {}
 
          local is_init = item.tag == "Local"
@@ -674,6 +675,10 @@ function LinState:register_set_variables()
             local value
 
             if node.var then
+               -- OpSet also accesses
+               if item.tag == "OpSet" then
+                  self:mark_access(item, node)
+               end
                value = new_value(node, item.rhs and item.rhs[i] or unpacking_item, item, is_init)
                item.set_variables[node.var] = value
                table.insert(node.var.values, value)

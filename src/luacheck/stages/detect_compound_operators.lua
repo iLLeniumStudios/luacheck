@@ -23,7 +23,7 @@ local reverse_compound_operators = {
 }
 
 local function check_node(chstate, node)
-    local operator = reverse_compound_operators[node[1]]
+    local operator = reverse_compound_operators[node[3]]
     chstate:warn_range("033", node, {operator = operator})
 end
 

@@ -1,6 +1,11 @@
 local i = 0
 i += 10
 i -= 5
-i *= 2
-i /= 5
-return i
+local function func()
+	i /= 5
+end
+func()
+local t = {}
+t.a = i
+t.a *= 2
+return t

@@ -300,8 +300,8 @@ Total: 5 warnings / 0 errors in 1 file
 
     spec/samples/compound_operators.lua:2:1: assignment uses compound operator +=
     spec/samples/compound_operators.lua:3:1: assignment uses compound operator -=
-    spec/samples/compound_operators.lua:4:1: assignment uses compound operator *=
-    spec/samples/compound_operators.lua:5:1: assignment uses compound operator /=
+    spec/samples/compound_operators.lua:5:2: assignment uses compound operator /=
+    spec/samples/compound_operators.lua:10:1: assignment uses compound operator *=
 
 Total: 0 warnings / 4 errors in 1 file
 ]], get_output "spec/samples/compound_operators.lua --no-config")
@@ -311,8 +311,8 @@ Total: 0 warnings / 4 errors in 1 file
       assert.equal([[Checking spec/samples/compound_operators.lua      3 errors
 
     spec/samples/compound_operators.lua:3:1: assignment uses compound operator -=
-    spec/samples/compound_operators.lua:4:1: assignment uses compound operator *=
-    spec/samples/compound_operators.lua:5:1: assignment uses compound operator /=
+    spec/samples/compound_operators.lua:5:2: assignment uses compound operator /=
+    spec/samples/compound_operators.lua:10:1: assignment uses compound operator *=
 
 Total: 0 warnings / 3 errors in 1 file
 ]], get_output "spec/samples/compound_operators.lua --no-config --operators +=")

@@ -931,7 +931,7 @@ local function parse_expression_statement(state)
          parse_error(state, "compound assignment not allowed on tuples near " .. compound_operator .. "=")
       end
 
-      return new_inner_node(start_range, rhs[1], "OpSet", {compound_operator, lhs[1], rhs[1]})
+      return new_inner_node(start_range, rhs[1], "OpSet", {lhs, rhs, compound_operator})
    else
       -- This is an assignment in the form `lhs = rhs`.
       check_and_skip_token(state, "=")
