@@ -40,7 +40,7 @@ For parallel checking Luacheck additionally requires [LuaLanes](https://github.c
 ### Windows binary download
 
 For Windows there is single-file 64-bit binary distribution, bundling Lua 5.4.4, Luacheck, LuaFileSystem, and LuaLanes using [LuaStatic](https://github.com/ers35/luastatic):
-[download](https://github.com/lunarmodules/luacheck/releases/download/v1.1.0/luacheck.exe).
+[download](https://github.com/lunarmodules/luacheck/releases/download/v1.1.1/luacheck.exe).
 
 ## Basic usage
 
@@ -109,7 +109,7 @@ Documentation can be built using [Sphinx](http://sphinx-doc.org/): `sphinx-build
 
 ## Development
 
-Luacheck is currently in development. The latest released version is v1.1.0. The interface of the `luacheck` module may change between minor releases. The command line interface is fairly stable.
+Luacheck is currently in development. The latest released version is v1.1.1. The interface of the `luacheck` module may change between minor releases. The command line interface is fairly stable.
 
 Use the Luacheck issue tracker on GitHub to submit bugs, suggestions and questions. Any pull requests are welcome, too.
 
@@ -172,14 +172,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
       - name: Luacheck linter
-        uses: lunarmodules/luacheck@v0
+        uses: lunarmodules/luacheck@v1
 ```
 
 By default the GH Action is configured to run `luacheck .`, but you can also pass it your own `args` to replace the default input of `.`.
 
 ```yaml
       - name: Luacheck linter
-        uses: lunarmodules/luacheck@v0
+        uses: lunarmodules/luacheck@v1
         with:
             args: myfile.lua
 ```
